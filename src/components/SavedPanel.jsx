@@ -42,7 +42,7 @@ export default function SavedPanel({ favorites, history, onPick, onRemoveFavorit
       </div>
 
       <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1 sm:max-h-72">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {tab === 'favorites' &&
             (favorites.length === 0 ? (
               <EmptyState text="Chưa có món nào được lưu. Bấm 💖 trên thẻ kết quả nhé!" />

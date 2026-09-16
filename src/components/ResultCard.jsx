@@ -45,14 +45,27 @@ export default function ResultCard({ food, onSpinAgain, isFavorite, onToggleFavo
         animate={{ opacity: 1, scale: 1, rotateY: 0, y: 0 }}
         transition={{ type: 'spring', stiffness: 160, damping: 18 }}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="relative rounded-[28px] border border-white/90 bg-white/80 p-5 shadow-candy backdrop-blur-xl sm:rounded-[32px] sm:p-6"
+        className="relative rounded-[28px] border border-white/90 bg-white/95 p-5 shadow-candy sm:rounded-[32px] sm:p-6"
       >
         <div className="absolute inset-0 overflow-hidden rounded-[28px] sm:rounded-[32px]">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-candy-200/70 blur-2xl" />
-          <div className="absolute -bottom-12 -left-8 h-32 w-32 rounded-full bg-fuchsia-200/60 blur-2xl" />
+          {/* Gradient tĩnh + vệt sáng chạy theo chuột, đều không dùng blur */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(120% 90% at 84% 0%, rgba(255,204,230,0.75) 0%, rgba(255,204,230,0) 62%)',
+            }}
+          />
           <motion.div
-            className="absolute h-40 w-40 rounded-full bg-white/45 blur-2xl"
-            style={{ left: shineX, top: shineY, translateX: '-50%', translateY: '-50%' }}
+            className="absolute h-48 w-48 rounded-full"
+            style={{
+              left: shineX,
+              top: shineY,
+              translateX: '-50%',
+              translateY: '-50%',
+              background:
+                'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 68%)',
+            }}
           />
         </div>
 
@@ -78,7 +91,10 @@ export default function ResultCard({ food, onSpinAgain, isFavorite, onToggleFavo
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <span className="select-none text-[68px] leading-none drop-shadow-[0_14px_22px_rgba(245,44,138,0.32)] sm:text-[86px]">
+            <span
+              className="select-none text-[68px] leading-none sm:text-[86px]"
+              style={{ textShadow: '0 14px 22px rgba(245,44,138,0.32)' }}
+            >
               {food.emoji}
             </span>
           </motion.div>

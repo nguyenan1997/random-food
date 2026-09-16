@@ -26,7 +26,8 @@ export default function Confetti({ trigger = 0 }) {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    // Giới hạn DPR ở 1.5: canvas full-screen ở DPR 3 ngốn rất nhiều VRAM
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
 
     const resize = () => {
       canvas.width = window.innerWidth * dpr
@@ -78,7 +79,7 @@ export default function Confetti({ trigger = 0 }) {
       const originX = W / 2
       const originY = Math.min(H * 0.45, 420)
 
-      for (let i = 0; i < 130; i++) {
+      for (let i = 0; i < 70; i++) {
         const spread = (Math.random() - 0.5) * 2
         particles.current.push({
           x: originX + spread * 60,

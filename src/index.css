@@ -72,11 +72,12 @@ body {
   animation: shimmer 4s linear infinite;
 }
 
+/* Trước đây dùng backdrop-filter: blur(14px) — vì nền phía sau có animation
+   nên trình duyệt phải làm mờ lại toàn bộ mỗi khung hình, gây sập GPU trên
+   điện thoại. Nay dùng nền trắng đục mờ, nhìn gần như y hệt. */
 .glass {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(255, 230, 242, 0.7));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.93), rgba(255, 236, 246, 0.88));
+  border: 1px solid rgba(255, 255, 255, 0.95);
 }
 
 @keyframes shimmer {

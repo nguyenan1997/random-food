@@ -22,7 +22,7 @@ function CardFace({ food, radius, width, height }) {
   const cat = categoryMeta(food.category)
   return (
     <div
-      className="absolute left-1/2 top-1/2 overflow-hidden rounded-[28px] border border-white/90 bg-white/85 shadow-candy backdrop-blur-md"
+      className="absolute left-1/2 top-1/2 overflow-hidden rounded-[28px] border border-white/90 bg-white shadow-candy"
       style={{
         width,
         height,
@@ -34,16 +34,14 @@ function CardFace({ food, radius, width, height }) {
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white via-candy-50 to-candy-100" />
-      <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-candy-200/70 blur-2xl" />
-      <div className="absolute -bottom-10 -left-6 h-24 w-24 rounded-full bg-fuchsia-200/70 blur-2xl" />
 
       <div className="relative flex h-full flex-col items-center justify-center gap-2 px-4 text-center sm:gap-3 sm:px-5">
         <span className="rounded-full bg-white/80 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-candy-600 shadow-sm sm:px-3 sm:py-1 sm:text-[11px]">
           {cat.emoji} {cat.label}
         </span>
         <motion.span
-          className="select-none drop-shadow-[0_10px_18px_rgba(245,44,138,0.28)]"
-          style={{ fontSize: Math.round(height * 0.24) }}
+          className="select-none"
+          style={{ fontSize: Math.round(height * 0.24), textShadow: '0 10px 18px rgba(245,44,138,0.28)' }}
           animate={{ y: [0, -6, 0], rotate: [-3, 3, -3] }}
           transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -158,18 +156,17 @@ export default function FoodReel3D({ foods, onResult, onSpinStart, soundOn, roll
 
   return (
     <div ref={boxRef} className="relative flex w-full flex-col items-center">
-      {/* stage glow */}
-      <div className="pointer-events-none absolute top-10 h-56 w-56 rounded-full bg-candy-400/30 blur-[70px]" />
-
-      {/* Trống 3D rộng hơn màn điện thoại, nên cho tràn ra rồi cắt ở mép
-          màn hình kèm vệt mờ hai bên cho đỡ gắt. */}
+      {/* vệt sáng sau trống — gradient tĩnh thay cho element blur 70px */}
       <div
-        className="relative -mx-4 w-auto overflow-x-clip sm:mx-0 sm:overflow-x-visible"
+        className="pointer-events-none absolute top-8 h-56 w-56 rounded-full"
         style={{
-          maskImage: 'linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)',
+          background: 'radial-gradient(circle, rgba(255,124,191,0.35) 0%, rgba(255,124,191,0) 70%)',
         }}
-      >
+      />
+
+      {/* Trống 3D rộng hơn màn điện thoại nên cho tràn ra rồi cắt ở mép màn
+          hình. Không dùng mask-image nữa vì mask trên cả vùng 3D rất tốn GPU. */}
+      <div className="relative -mx-4 w-auto overflow-x-clip sm:mx-0 sm:overflow-x-visible">
         <div
           className="scene relative flex items-center justify-center"
           style={{ height: size.h + 40, width: '100%' }}
@@ -197,8 +194,8 @@ export default function FoodReel3D({ foods, onResult, onSpinStart, soundOn, roll
 
           {/* floor shadow */}
           <div
-            className="pointer-events-none absolute bottom-1 rounded-[50%] bg-plum-900/15 blur-xl transition-all"
-            style={{ width: size.w * 0.9, height: 26, opacity: rolling ? 0.6 : 0.35 }}
+            className="pointer-events-none absolute bottom-1 rounded-[50%] bg-plum-900/10 transition-opacity"
+            style={{ width: size.w * 0.9, height: 20, opacity: rolling ? 0.6 : 0.35 }}
           />
         </div>
       </div>
@@ -229,7 +226,7 @@ export default function FoodReel3D({ foods, onResult, onSpinStart, soundOn, roll
           </span>
         </motion.button>
         {!rolling && !empty && (
-          <span className="pointer-events-none absolute -inset-3 -z-10 animate-heartbeat rounded-full bg-candy-400/25 blur-lg" />
+          <span className="pointer-events-none absolute -inset-2 -z-10 animate-heartbeat rounded-full border-2 border-candy-400/40" />
         )}
       </div>
 

@@ -1,60 +1,64 @@
 import { useMemo } from 'react'
 
-const FLOATERS = ['🍜', '🥢', '💕', '🍧', '🧋', '🌸', '🍢', '🥖', '🍰', '🍜', '💗', '🥟', '🍡', '💖', '☕', '🔥']
+const FLOATERS = ['🍜', '🥢', '💕', '🍧', '🧋', '🌸', '🍢', '🥖', '🍰', '💗']
 
 export default function Background() {
   const floaters = useMemo(
     () =>
       FLOATERS.map((emoji, i) => ({
         emoji,
-        left: (i * 6.5 + Math.random() * 4) % 96,
-        size: 18 + Math.random() * 30,
+        left: (i * 10 + Math.random() * 4) % 94,
+        size: 20 + Math.random() * 26,
         delay: Math.random() * 9,
-        duration: 12 + Math.random() * 14,
-        opacity: 0.35 + Math.random() * 0.45,
+        duration: 12 + Math.random() * 12,
+        opacity: 0.4 + Math.random() * 0.4,
       })),
     [],
   )
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {/* Base pink wash */}
-      <div className="absolute inset-0 bg-[radial-gradient(120%_120%_at_15%_0%,#fff7fc_0%,#ffe3f1_38%,#ffd0e8_68%,#ffbde0_100%)]" />
-
-      {/* Soft animated blobs */}
-      <div className="absolute -left-32 top-[-10%] h-[46rem] w-[46rem] rounded-full bg-candy-300/45 blur-[120px] animate-floaty-slow" />
-      <div className="absolute -right-40 top-1/4 h-[38rem] w-[38rem] rounded-full bg-fuchsia-300/40 blur-[120px] animate-floaty" />
-      <div className="absolute bottom-[-18%] left-1/3 h-[42rem] w-[42rem] rounded-full bg-rose-200/55 blur-[130px] animate-floaty-slow" />
-
-      {/* Subtle dot grid */}
+      {/* Nền hồng: gradient tĩnh — thay cho 3 blob blur 120px trước đây,
+          vì blur diện tích lớn chạy mỗi khung hình sẽ làm sập GPU. */}
       <div
-        className="absolute inset-0 opacity-[0.18]"
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(58% 42% at 10% 0%, rgba(255,168,212,0.80) 0%, rgba(255,168,212,0) 70%),' +
+            'radial-gradient(52% 38% at 94% 24%, rgba(243,171,252,0.62) 0%, rgba(243,171,252,0) 72%),' +
+            'radial-gradient(72% 52% at 44% 108%, rgba(255,205,225,0.90) 0%, rgba(255,205,225,0) 72%),' +
+            'linear-gradient(180deg, #fff8fc 0%, #ffe7f3 44%, #ffd8eb 100%)',
+        }}
+      />
+
+      {/* Lưới chấm mờ */}
+      <div
+        className="absolute inset-0 opacity-[0.16]"
         style={{
           backgroundImage: 'radial-gradient(#ff6bb5 1px, transparent 1px)',
           backgroundSize: '26px 26px',
         }}
       />
 
-      {/* Floating food & hearts */}
+      {/* Emoji bay — chỉ animate transform, không dùng filter drop-shadow */}
       {floaters.map((f, i) => (
         <span
           key={i}
           className="absolute select-none animate-floaty"
           style={{
             left: `${f.left}%`,
-            top: `${(i * 17 + 6) % 92}%`,
+            top: `${(i * 21 + 6) % 90}%`,
             fontSize: `${f.size}px`,
             opacity: f.opacity,
             animationDelay: `${f.delay}s`,
             animationDuration: `${f.duration}s`,
-            filter: 'drop-shadow(0 6px 10px rgba(245,44,138,0.25))',
           }}
         >
           {f.emoji}
         </span>
       ))}
 
-      {/* Bottom fade so content stays readable */}
+      {/* Che dần xuống đáy cho chữ dễ đọc */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-candy-100/90 to-transparent" />
     </div>
   )
