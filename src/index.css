@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  /* fallback cho Safari cũ, rồi tới clip (giữ được overflow dọc) */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
+  color: #4b1b3b;
+  background: #fff5fa;
+  overflow-x: clip;
+}
+
+.font-display {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+}
+
+/* ---- Pretty scrollbar ---- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #ffe6f2;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffa8d4, #f52c8a);
+  border-radius: 999px;
+  border: 2px solid #ffe6f2;
+}
+
+/* ---- 3D helpers ---- */
+.scene {
+  perspective: 1600px;
+  perspective-origin: 50% 45%;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #ff4fa3, #ff7cbf, #ffb0d9, #f52c8a, #ff4fa3);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.glass {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(255, 230, 242, 0.7));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
